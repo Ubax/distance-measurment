@@ -1,0 +1,18 @@
+.coordinates {
+}
+input {
+  color: #ccc;
+}
+#calculate:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+#result {
+  visibility: visible;
+  transition: visibility 1s;
+}
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s;
+}

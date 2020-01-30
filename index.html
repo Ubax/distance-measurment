@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <title>Distance calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <div class="container ">
+      <div
+        class="card blue darken-4 grey-text text-lighten-4"
+        id="starting_point"
+      >
+        <div class="card-content">
+          <div class="card-title">Starting point</div>
+          <div class="row">
+            <div class="input-field col s10 l4">
+              <input type="number" placeholder="Latitude" class="latitude" />
+            </div>
+            <div class="input-field col s2 l2">
+              <select class="latitude_direction">
+                <option value="N" selected>&deg N</option>
+                <option value="S">&deg S</option>
+              </select>
+            </div>
+            <div class="input-field col s10 l4">
+              <input
+                type="number"
+                placeholder="Longtitude"
+                class="Longtitude"
+              />
+            </div>
+            <div class="input-field col s2 l2">
+              <select class="longtitude_direction">
+                <option value="E" selected>&deg E</option>
+                <option value="W">&deg W</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card blue darken-4 grey-text text-lighten-4" id="destination">
+        <div class="card-content">
+          <div class="card-title">Destination</div>
+          <div class="row">
+            <div class="input-field col s10 l4">
+              <input type="number" placeholder="Latitude" class="latitude" />
+            </div>
+            <div class="input-field col s2 l2">
+              <select class="latitude_direction">
+                <option value="N" selected>&deg N</option>
+                <option value="S">&deg S</option>
+              </select>
+            </div>
+            <div class="input-field col s10 l4">
+              <input
+                type="number"
+                placeholder="Longtitude"
+                class="Longtitude"
+              />
+            </div>
+            <div class="input-field col s2 l2">
+              <select class="longtitude_direction">
+                <option value="E" selected>&deg E</option>
+                <option value="W">&deg W</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card blue darken-4 grey-text text-lighten-4" id="calculate">
+        <div class="card-content center">
+          CALCULATE
+        </div>
+      </div>
+      <div
+        class="card blue darken-4 grey-text text-lighten-4 scale-transition hidden"
+        id="result"
+      >
+        <div class="card-content">
+          <div class="card-title">Result</div>
+          <div class="row distance">
+            <div class="col s8">Distance</div>
+            <div class="col s4 value">0 km</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let elems = document.querySelectorAll("select");
+      let instances = M.FormSelect.init(elems);
+    });
+    document.querySelector("#calculate").addEventListener("click", function() {
+      let distance = 0.0;
+
+      let startingCoordinates = getCoordiantes("#starting_point");
+      let destinationCoordinates = getCoordiantes("#destination");
+
+      distance = parseInt(
+        calcDistance(startingCoordinates, destinationCoordinates)
+      );
+      document.querySelector(
+        "#result .distance .value"
+      ).innerHTML = `${distance} km`;
+      document.querySelector("#result").classList.remove("hidden");
+    });
+  </script>
+</html>
