@@ -10,75 +10,106 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
     <div class="container ">
-      <div
-        class="card blue darken-4 grey-text text-lighten-4"
-        id="starting_point"
-      >
-        <div class="card-content">
-          <div class="card-title">Starting point</div>
-          <div class="row">
-            <div class="input-field col s10 l4">
-              <input type="number" placeholder="Latitude" class="latitude" />
+      <div class="row">
+        <div class="col m6 s12 coordinates">
+          <div
+            class="card blue darken-4 grey-text text-lighten-4"
+            id="starting_point"
+          >
+            <div class="card-content">
+              <div class="card-title">Starting point</div>
+              <div class="row">
+                <div class="input-field col s10 l4">
+                  <input
+                    type="number"
+                    placeholder="Latitude"
+                    class="latitude"
+                  />
+                </div>
+                <div class="input-field col s2 l2">
+                  <select class="latitude_direction">
+                    <option value="N" selected>&deg N</option>
+                    <option value="S">&deg S</option>
+                  </select>
+                </div>
+                <div class="input-field col s10 l4">
+                  <input
+                    type="number"
+                    placeholder="Longtitude"
+                    class="Longtitude"
+                  />
+                </div>
+                <div class="input-field col s2 l2">
+                  <select class="longtitude_direction">
+                    <option value="E" selected>&deg E</option>
+                    <option value="W">&deg W</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="input-field col s2 l2">
-              <select class="latitude_direction">
-                <option value="N" selected>&deg N</option>
-                <option value="S">&deg S</option>
-              </select>
-            </div>
-            <div class="input-field col s10 l4">
-              <input
-                type="number"
-                placeholder="Longtitude"
-                class="Longtitude"
-              />
-            </div>
-            <div class="input-field col s2 l2">
-              <select class="longtitude_direction">
-                <option value="E" selected>&deg E</option>
-                <option value="W">&deg W</option>
-              </select>
+          </div>
+        </div>
+        <div class="col m6 s12 coordinates">
+          <div
+            class="card blue darken-4 grey-text text-lighten-4"
+            id="destination"
+          >
+            <div class="card-content">
+              <div class="card-title">Destination</div>
+              <div class="row">
+                <div class="input-field col s10 l4">
+                  <input
+                    type="number"
+                    placeholder="Latitude"
+                    class="latitude"
+                  />
+                </div>
+                <div class="input-field col s2 l2">
+                  <select class="latitude_direction">
+                    <option value="N" selected>&deg N</option>
+                    <option value="S">&deg S</option>
+                  </select>
+                </div>
+                <div class="input-field col s10 l4">
+                  <input
+                    type="number"
+                    placeholder="Longtitude"
+                    class="Longtitude"
+                  />
+                </div>
+                <div class="input-field col s2 l2">
+                  <select class="longtitude_direction">
+                    <option value="E" selected>&deg E</option>
+                    <option value="W">&deg W</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="card blue darken-4 grey-text text-lighten-4" id="destination">
-        <div class="card-content">
-          <div class="card-title">Destination</div>
-          <div class="row">
-            <div class="input-field col s10 l4">
-              <input type="number" placeholder="Latitude" class="latitude" />
-            </div>
-            <div class="input-field col s2 l2">
-              <select class="latitude_direction">
-                <option value="N" selected>&deg N</option>
-                <option value="S">&deg S</option>
-              </select>
-            </div>
-            <div class="input-field col s10 l4">
-              <input
-                type="number"
-                placeholder="Longtitude"
-                class="Longtitude"
-              />
-            </div>
-            <div class="input-field col s2 l2">
-              <select class="longtitude_direction">
-                <option value="E" selected>&deg E</option>
-                <option value="W">&deg W</option>
-              </select>
-            </div>
+      <div class="row">
+        <div id="map"></div>
+      </div>
+      <div class="row">
+        <div class="card blue darken-4 grey-text text-lighten-4" id="calculate">
+          <div class="card-content center">
+            CALCULATE
           </div>
         </div>
       </div>
-      <div class="card blue darken-4 grey-text text-lighten-4" id="calculate">
-        <div class="card-content center">
-          CALCULATE
-        </div>
+      <div class="row">
+        <div class="card"></div>
       </div>
       <div
         class="card blue darken-4 grey-text text-lighten-4 scale-transition hidden"
@@ -114,6 +145,23 @@
         "#result .distance .value"
       ).innerHTML = `${distance} km`;
       document.querySelector("#result").classList.remove("hidden");
+    });
+  </script>
+  <script
+    src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""
+  ></script>
+  <script>
+    var map = L.map("map").setView([51.505, -0.09], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    navigator.geolocation.getCurrentPosition(position => {
+      map.panTo(
+        new L.LatLng(position.coords.latitude, position.coords.longitude)
+      );
     });
   </script>
 </html>
