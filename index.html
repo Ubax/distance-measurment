@@ -112,7 +112,7 @@
         <div class="card"></div>
       </div>
       <div
-        class="card blue darken-4 grey-text text-lighten-4 scale-transition hidden"
+        class="card blue darken-4 grey-text text-lighten-4 scale-transition"
         id="result"
       >
         <div class="card-content">
@@ -132,28 +132,15 @@
       let elems = document.querySelectorAll("select");
       let instances = M.FormSelect.init(elems);
     });
-    document.querySelector("#calculate").addEventListener("click", function() {
-      let distance = 0.0;
-
-      let startingCoordinates = getCoordiantes("#starting_point");
-      let destinationCoordinates = getCoordiantes("#destination");
-
-      distance = parseInt(
-        calcDistance(startingCoordinates, destinationCoordinates)
-      );
-      document.querySelector(
-        "#result .distance .value"
-      ).innerHTML = `${distance} km`;
-      document.querySelector("#result").classList.remove("hidden");
-    });
   </script>
+  <script src="js/form.js"></script>
   <script
     src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""
   ></script>
   <script>
-    var map = L.map("map").setView([51.505, -0.09], 13);
+    var map = L.map("map").setView([51.505, -0.09], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
